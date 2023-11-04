@@ -29,7 +29,7 @@ export default function Login() {
         </form>
         {/*bottom*/}
         <p className="text-center text-gray-400">
-          don't have an account?{" "}
+          Don't have an account?{" "}
           <Link href="/register" legacyBehavior>
             <a className="text-blue-700">Sign Up</a>
           </Link>

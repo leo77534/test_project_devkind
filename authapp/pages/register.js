@@ -2,6 +2,7 @@ import Head from "next/head";
 import Layout from "@/layout/layout";
 import Link from "next/link";
 import { useFormik } from "formik";
+import { register_vaildate } from "../lib/validate";
 
 export default function Register() {
   const formik = useFormik({
@@ -11,6 +12,7 @@ export default function Register() {
       password: "",
       cpassword: "", //mean confirm password
     },
+    validate: register_vaildate,
     onSubmit,
   });
 
@@ -41,6 +43,11 @@ export default function Register() {
               {...formik.getFieldProps("username")}
             />
           </div>
+          {formik.errors.username && formik.touched.username ? (
+            <span className="text-rose-500">{formik.errors.username}</span>
+          ) : (
+            <></>
+          )}
           <div className="input-group">
             <input
               type="email"
@@ -49,6 +56,11 @@ export default function Register() {
               {...formik.getFieldProps("email")}
             />
           </div>
+          {formik.errors.email && formik.touched.email ? (
+            <span className="text-rose-500">{formik.errors.email}</span>
+          ) : (
+            <></>
+          )}
           <div className="input-group">
             <input
               type="password"
@@ -57,6 +69,11 @@ export default function Register() {
               {...formik.getFieldProps("password")}
             />
           </div>
+          {formik.errors.password && formik.touched.password ? (
+            <span className="text-rose-500">{formik.errors.password}</span>
+          ) : (
+            <></>
+          )}
           <div className="input-group">
             <input
               type="password"
@@ -65,6 +82,12 @@ export default function Register() {
               {...formik.getFieldProps("cpassword")}
             />
           </div>
+          {formik.errors.cpassword && formik.touched.cpassword ? (
+            <span className="text-rose-500">{formik.errors.cpassword}</span>
+          ) : (
+            <></>
+          )}
+
           {/*login buttons*/}
           <div className="input-button">
             <button type="submit">Sign Up</button>

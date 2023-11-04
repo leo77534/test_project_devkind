@@ -1,13 +1,27 @@
 import Head from "next/head";
 import Layout from "@/layout/layout";
 import Link from "next/link";
+import { useFormik } from "formik";
 
 export default function Login() {
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit,
+  });
+
+  async function onSubmit(values) {
+    console.log(values);
+  }
+
   return (
     <Layout>
       <Head>
         <title>Login</title>
       </Head>
+
       <section className="w-3/4 mx-auto flex flex-col gap-10">
         <div className="title">
           <h1 className="text-gray-800 text-4xl font-bold py-4">
@@ -15,12 +29,24 @@ export default function Login() {
           </h1>
           <p className="w-3/4 mx-auto text-gray-400">authentication system</p>
         </div>
-        <form className="flex flex-col gap-5">
+
+        {/*form*/}
+        <form className="flex flex-col gap-5" onSubmit={formik.handleSubmit}>
           <div className="input-group">
-            <input type="email" name="email" placeholder="email" />
+            <input
+              type="email"
+              name="email"
+              placeholder="email"
+              {...formik.getFieldProps("email")}
+            />
           </div>
           <div className="input-group">
-            <input type="password" name="password" placeholder="password" />
+            <input
+              type="password"
+              name="password"
+              placeholder="password"
+              {...formik.getFieldProps("password")}
+            />
           </div>
           {/*login buttons*/}
           <div className="input-button">

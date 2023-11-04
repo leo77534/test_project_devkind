@@ -1,8 +1,23 @@
 import Head from "next/head";
 import Layout from "@/layout/layout";
 import Link from "next/link";
+import { useFormik } from "formik";
 
 export default function Register() {
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+      cpassword: "", //mean confirm password
+    },
+    onSubmit,
+  });
+
+  async function onSubmit(values) {
+    console.log(values);
+  }
+
   return (
     <Layout>
       <Head>
@@ -15,26 +30,44 @@ export default function Register() {
             Please fill in you information
           </p>
         </div>
-        <form className="flex flex-col gap-5">
+
+        {/*form*/}
+        <form className="flex flex-col gap-5" onSubmit={formik.handleSubmit}>
           <div className="input-group">
-            <input type="text" name="Username" placeholder="Username" />
+            <input
+              type="text"
+              name="Username"
+              placeholder="Username"
+              {...formik.getFieldProps("username")}
+            />
           </div>
           <div className="input-group">
-            <input type="email" name="email" placeholder="email" />
+            <input
+              type="email"
+              name="email"
+              placeholder="email"
+              {...formik.getFieldProps("email")}
+            />
           </div>
           <div className="input-group">
-            <input type="password" name="password" placeholder="password" />
+            <input
+              type="password"
+              name="password"
+              placeholder="password"
+              {...formik.getFieldProps("password")}
+            />
           </div>
           <div className="input-group">
             <input
               type="password"
               name="cpassword"
               placeholder="Comfirm Password"
+              {...formik.getFieldProps("cpassword")}
             />
           </div>
           {/*login buttons*/}
           <div className="input-button">
-            <button type="submit">Login</button>
+            <button type="submit">Sign Up</button>
           </div>
         </form>
         {/*bottom*/}

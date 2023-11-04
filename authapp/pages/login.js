@@ -2,13 +2,16 @@ import Head from "next/head";
 import Layout from "@/layout/layout";
 import Link from "next/link";
 import { useFormik } from "formik";
+import login_vaildate from "../lib/validate";
 
 export default function Login() {
+  //formik hook
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
+    validate: login_vaildate,
     onSubmit,
   });
 
@@ -40,6 +43,11 @@ export default function Login() {
               {...formik.getFieldProps("email")}
             />
           </div>
+          {formik.errors.email && formik.touched.email ? (
+            <span className="text-rose-500">{formik.errors.email}</span>
+          ) : (
+            <></>
+          )}
           <div className="input-group">
             <input
               type="password"
@@ -48,6 +56,11 @@ export default function Login() {
               {...formik.getFieldProps("password")}
             />
           </div>
+          {formik.errors.password && formik.touched.password ? (
+            <span className="text-rose-500">{formik.errors.password}</span>
+          ) : (
+            <></>
+          )}
           {/*login buttons*/}
           <div className="input-button">
             <button type="submit">Login</button>

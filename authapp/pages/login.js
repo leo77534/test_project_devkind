@@ -3,6 +3,7 @@ import Layout from "@/layout/layout";
 import Link from "next/link";
 import { useFormik } from "formik";
 import login_vaildate from "../lib/validate";
+import { signIn, signOut } from "next-auth/react";
 
 export default function Login() {
   //formik hook
@@ -16,7 +17,14 @@ export default function Login() {
   });
 
   async function onSubmit(values) {
-    console.log(values);
+    const status = await signIn("credentials", {
+      redirect: false,
+      email: values.email,
+      password: values.password,
+      callbackUrl: "/",
+    });
+
+    if (status.ok) router.push(status.url);
   }
 
   return (

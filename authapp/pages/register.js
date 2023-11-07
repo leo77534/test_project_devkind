@@ -4,9 +4,11 @@ import Link from "next/link";
 import { useFormik } from "formik";
 import { register_vaildate } from "../lib/validate";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function Register() {
   const router = useRouter();
+  const [isAgeConfirmed, setIsAgeConfirmed] = useState(false);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -19,17 +21,26 @@ export default function Register() {
   });
 
   async function onSubmit(values) {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    };
-    await fetch("http://localhost:3000/api/auth/signup", options)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data) router.push("http://localhost:3000");
-      });
+    if (isAgeConfirmed) {
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      };
+      await fetch("http://localhost:3000/api/auth/signup", options)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data) router.push("http://localhost:3000");
+        });
+    } else {
+      alert("Please confirm that you are at least 18 years old.");
+    }
   }
+
+  // Handle checkbox change
+  const handleAgeConfirmationChange = () => {
+    setIsAgeConfirmed(!isAgeConfirmed);
+  };
 
   return (
     <Layout>
@@ -98,10 +109,23 @@ export default function Register() {
           ) : (
             <></>
           )}
+          <div className="input-group">
+            <label>
+              <input
+                type="checkbox"
+                name="ageConfirmation"
+                checked={isAgeConfirmed}
+                onChange={handleAgeConfirmationChange}
+              />
+              I confirm that I am at least 18 years old
+            </label>
+          </div>
 
           {/*login buttons*/}
           <div className="input-button">
-            <button type="submit">Sign Up</button>
+            <button type="submit" disabled={!isAgeConfirmed}>
+              Sign Up
+            </button>
           </div>
         </form>
         {/*bottom*/}

@@ -4,8 +4,10 @@ import Link from "next/link";
 import { useFormik } from "formik";
 import login_vaildate from "../lib/validate";
 import { signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function Login() {
+  const router = useRouter();
   //formik hook
   const formik = useFormik({
     initialValues: {

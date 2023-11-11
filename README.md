@@ -43,8 +43,17 @@ npm run dev
   User can change password by filling in password and comfirm password.  
   (User must fill in the same email as they log in)  
   Click update to put the new username and password to mongoDB.
+  (User must fill in all blanks)   
   Click Home Page to back to home page and click Sign out to back to login page.  
   User can log in with the new password.  
+
+- Validate input
+
+  All data enter by user will be validated.
+  ![Alt text](https://github.com/leo77534/test_project_devkind/blob/main/screenshot/Screenshot%202023-11-12%20at%202.06.17%20am.png?raw=true)  
+  For example, the system will warn user if they enter wrong email and password in login page.
+  ![Alt text](https://github.com/leo77534/test_project_devkind/blob/main/screenshot/Screenshot%202023-11-12%20at%202.10.16%20am.png?raw=true)  
+  Here is another example, the system will warn user if they keep the blank empty or they enter different password and comfirm password.
 
 ## Contact
 For any inquiries, please contact zhaofaguo@gmail.com.

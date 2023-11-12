@@ -6,19 +6,23 @@ import login_vaildate from "../lib/validate";
 import { signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
+// React functional component for the login page
 export default function Login() {
+  // Next.js router hook
   const router = useRouter();
-  //formik hook
+  // Formik hook for handling form state and validation
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    validate: login_vaildate,
-    onSubmit,
+    validate: login_vaildate, // Validation function imported from lib/validate
+    onSubmit, // Callback function when the form is submitted
   });
 
+  // Callback function to handle form submission
   async function onSubmit(values) {
+    // Sign in using NextAuth credentials provider
     const status = await signIn("credentials", {
       redirect: false,
       email: values.email,
@@ -26,9 +30,11 @@ export default function Login() {
       callbackUrl: "/",
     });
 
+    // If sign-in is successful, redirect to the specified URL
     if (status.ok) router.push(status.url);
   }
 
+  // JSX rendering for the login page
   return (
     <Layout>
       <Head>
@@ -76,7 +82,7 @@ export default function Login() {
             <button type="submit">Login</button>
           </div>
         </form>
-        {/*bottom*/}
+        {/* Bottom section with a link to the registration page */}
         <p className="text-center text-gray-400">
           Don't have an account?{" "}
           <Link href="/register" legacyBehavior>

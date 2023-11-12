@@ -5,31 +5,38 @@ import { register_vaildate } from "../lib/validate";
 import Layout from "@/layout/layout";
 import Head from "next/head";
 
+// Functional component for the profile update page
 export default () => {
+  // Using useFormik hook to manage form state and validation
   const formik = useFormik({
     initialValues: {
       username: "",
       email: "",
       password: "",
-      cpassword: "", //mean confirm password
+      cpassword: "", // 'cpassword' stands for confirm password
     },
-    validate: register_vaildate,
+    validate: register_vaildate, // Validation function for formik
     onSubmit,
   });
 
+  // Async function to handle form submission
   async function onSubmit(values) {
+    // Configuring fetch options for updating user profile
     const options = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     };
+    // Making a fetch request to the server's update API endpoint
     await fetch("http://localhost:3000/api/auth/update", options)
       .then((res) => res.json())
       .then((data) => {
+        // If update is successful, redirect to the home page
         if (data) router.push("http://localhost:3000");
       });
   }
 
+  // JSX structure for the profile update page
   return (
     <Layout>
       <Head>
@@ -117,9 +124,11 @@ export default () => {
   );
 };
 
+// Server-side function to check user session before rendering the page
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
 
+  // Redirecting to the login page if the user is not authenticated
   if (!session) {
     return {
       redirect: {
@@ -128,7 +137,7 @@ export async function getServerSideProps({ req }) {
       },
     };
   }
-  // authorize user return session
+  // Returning the user session if authenticated
   return {
     props: { session },
   };

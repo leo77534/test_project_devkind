@@ -6,8 +6,12 @@ This is an authtication system project. User can sign up, log in the account and
 - [Usage](#usage)
 - [Features](#features)
 
-## Installation
-Clone the repository
+## Installation  
+Please make sure your node.js version is up-to-date(20.X.X): https://nodejs.org/en  
+  
+If there is no 'next' in local device, open terminal and run: npm install next  
+  
+Clone the repository  
 git clone https://github.com/leo77534/test_project_devkind.git
 
 ## Usage

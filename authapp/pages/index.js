@@ -4,11 +4,14 @@ import Link from "next/link";
 import { getSession, useSession, signOut } from "next-auth/react";
 import Layout from "@/layout/layout";
 
+// Function to handle user sign out
 function handleSignOut() {
   signOut();
 }
 
+// Main component for the Home page
 export default function Home() {
+  // Get user session using the next-auth/react hook
   const { data: session } = useSession();
 
   return (
@@ -21,7 +24,7 @@ export default function Home() {
   );
 }
 
-// Guset
+// Guest component for users not logged in
 function Guest() {
   return (
     <main className="container mx-auto text-center py-20">
@@ -37,7 +40,7 @@ function Guest() {
   );
 }
 
-// Authorise user
+// User component for authenticated users
 function User({ session, handleSignOut }) {
   return (
     <Layout>
@@ -68,9 +71,11 @@ function User({ session, handleSignOut }) {
   );
 }
 
+// Server-side function to get user session
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
 
+  // Redirect to the login page if the user is not authenticated
   if (!session) {
     return {
       redirect: {
@@ -80,6 +85,7 @@ export async function getServerSideProps({ req }) {
     };
   }
 
+  // Pass the user session as a prop to the Home component
   return {
     props: { session },
   };

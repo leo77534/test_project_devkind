@@ -6,42 +6,52 @@ import { register_vaildate } from "../lib/validate";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+// The main component for user registration
 export default function Register() {
+  // Initialising Next.js router and state for age confirmation
   const router = useRouter();
   const [isAgeConfirmed, setIsAgeConfirmed] = useState(false);
+  // Using Formik for form state management and validation
   const formik = useFormik({
     initialValues: {
       username: "",
       email: "",
       password: "",
-      cpassword: "", //mean confirm password
+      cpassword: "", // Confirm password
     },
-    validate: register_vaildate,
-    onSubmit,
+    validate: register_vaildate, // Validation function from lib/validate
+    onSubmit, // Callback function when form is submitted
   });
 
+  // Function to handle form submission
   async function onSubmit(values) {
+    // Checking if user has confirmed age
     if (isAgeConfirmed) {
+      // Configuring options for the fetch request
       const options = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       };
+      // Sending registration data to the server
       await fetch("http://localhost:3000/api/auth/signup", options)
         .then((res) => res.json())
         .then((data) => {
+          // Redirecting to the home page if registration is successful
           if (data) router.push("http://localhost:3000");
         });
     } else {
+      // Displaying an alert if age confirmation is not checked
       alert("Please confirm that you are at least 18 years old.");
     }
   }
 
-  // Handle checkbox change
+  // Function to handle checkbox change for age confirmation
   const handleAgeConfirmationChange = () => {
     setIsAgeConfirmed(!isAgeConfirmed);
   };
 
+  // Rendering the registration form
   return (
     <Layout>
       <Head>
